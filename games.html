@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game - LaunchPad</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body {
+      overflow: hidden; /* Prevent scrolling on the main page */
+    }
+    
+    .game-container {
+      position: fixed;
+      top: 80px; /* Header height */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: calc(100vh - 80px);
+    }
+
+    #game-frame {
+      width: 100%;
+      height: 100%;
+    }
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Adjust back button position to not overlap with game */
+    .game-back-btn {
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <svg class="logo-svg" viewBox="0 0 200 50" width="200" height="50">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <path d="M10,25 L30,10 L30,40 Z" fill="#9C27B0" filter="url(#glow)"/>
+        <text x="40" y="35" fill="#fff" font-size="24" font-weight="bold" filter="url(#glow)">LaunchPad</text>
+      </svg>
+    </div>
+    <button class="fullscreen-btn">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+      </svg>
+    </button>
+  </header>
+
+  <a href="../buttons.html" class="game-back-btn">
+    <svg viewBox="0 0 24 24" width="24" height="24">
+      <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+    </svg>
+    Back to Games
+  </a>
+
+  <div class="game-container">
+    <div id="game-frame"></div>
+  </div>
+
+  <script>
+    const games = {
+      'draw-climber': 'https://classroom-opensocial.googleusercontent.com/gadgets/ifr?url=https://groups.google.com/u/6/group/54r7m5resdndren65dx/attach/ad3571bd0f6ac/4613.xml?part=0.1&view=1&authuser=6&container=ig',
+      '1v1-lol': 'https://W0Rhr8A3am-opensocial.googleusercontent.com/gadgets/ifr?url=https://groups.google.com/u/6/group/docs-classroom-s/attach/770f570099aa/go.xml?part=0.1&view=1&authuser=6&container=ig',
+      'granny': 'https://22l4ktmx-opensocial.googleusercontent.com/gadgets/ifr?url=https://groups.google.com/u/6/group/hornedo-middle-school/attach/18a50ff525789/godfgld46d46odfgldgoxxx-google-net-x46x46oxlssaawr467.xml?part=0.1&view=1&authuser=6&container=ig',
+      'ovo': 'https://gologl-opensocial.googleusercontent.com/gadgets/ifr?url=https://427396048-642845047394716217.preview.editmysite.com/uploads/b/139890129-761103484729797659/files/ovof.xml&container=ig',
+      'basket-random': 'https://clast5sroom-opensocial.googleusercontent.com/gadgets/ifr?url=https://groups.google.com/u/6/group/docs-classroom-s/attach/1f887c9f8832c/godfgld46d46odfgldgoxxx-google-net-x46x46oxlssaawr467.xml?part=0.1&view=1&authuser=6&container=ig',
+      'bighole': 'https://bighole.io/',
+      'slow-roads': 'https://hackingschoolwebsites.github.io/slowroads/'
+    };
+
+    function loadGame() {
+      const gameId = window.location.hash.slice(1) || 'draw-climber';
+      const gameUrl = games[gameId];
+      if (gameUrl) {
+        document.title = `${gameId.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} - LaunchPad`;
+        const gameFrame = document.getElementById('game-frame');
+        gameFrame.innerHTML = `<iframe src="${gameUrl}" allowfullscreen></iframe>`;
+      }
+    }
+
+    window.addEventListener('hashchange', loadGame);
+    loadGame();
+  </script>
+
+  <script src="../script.js"></script>
+</body>
+</html>
